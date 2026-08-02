@@ -72,6 +72,13 @@ NOTEBOOKS = (
         description="A compact introduction to solving an RBC model with sequence-space Jacobians in Julia.",
     ),
     NotebookPage(
+        repository="HANK",
+        source_path="notebooks/HANK.ipynb",
+        output_path="notebooks/hank/index.html",
+        title="Solving a HANK Model: From Equations to Krusell–Smith in Julia",
+        description="A global solution of a one-asset heterogeneous-agent New Keynesian model with aggregate TFP and monetary-policy shocks.",
+    ),
+    NotebookPage(
         repository="KS1998",
         source_path="notebooks/KS1998_Solver.ipynb",
         output_path="notebooks/ks1998/solver/index.html",

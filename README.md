@@ -27,4 +27,4 @@ python -m pip install -r requirements-notebooks.txt
 python scripts/render_notebooks.py
 ```
 
-The `Refresh notebooks and deploy Pages` GitHub Actions workflow runs this process daily, on website pushes, and on manual dispatch. Scheduled runs deploy only when a rendered notebook page has changed.
+Website pushes deploy the committed static notebook pages without re-rendering them. The `Refresh notebooks and deploy Pages` workflow can still be started manually when a refresh from the public source repositories is wanted; automatic scheduled refreshes are currently disabled.

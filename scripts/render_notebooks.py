@@ -75,7 +75,7 @@ NOTEBOOKS = (
         repository="HANK",
         source_path="notebooks/HANK.ipynb",
         output_path="notebooks/hank/index.html",
-        title="Solving a HANK Model: From Equations to Krusell–Smith in Julia",
+        title="Solving a HANK Model",
         description="A global solution of a one-asset heterogeneous-agent New Keynesian model with aggregate TFP and monetary-policy shocks.",
     ),
     NotebookPage(

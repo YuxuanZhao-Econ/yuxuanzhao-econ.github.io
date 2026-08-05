@@ -79,6 +79,13 @@ NOTEBOOKS = (
         description="A global solution of a one-asset heterogeneous-agent New Keynesian model with aggregate TFP and monetary-policy shocks.",
     ),
     NotebookPage(
+        repository="HANK",
+        source_path="notebooks/RANK.ipynb",
+        output_path="notebooks/rank/index.html",
+        title="Solving a RANK Model",
+        description="A representative-agent New Keynesian model solved with a global fixed-point algorithm.",
+    ),
+    NotebookPage(
         repository="KS1998",
         source_path="notebooks/KS1998_Solver.ipynb",
         output_path="notebooks/ks1998/solver/index.html",

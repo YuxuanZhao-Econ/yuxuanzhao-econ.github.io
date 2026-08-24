@@ -20,7 +20,7 @@ The `CNAME` file connects the GitHub Pages deployment to the custom domain.
 
 ## Refresh notebook pages
 
-The notebook library contains static reading copies of selected public notebooks. The render step downloads the current files from their source repositories but does not execute any code:
+The notebook library contains static reading copies of selected public notebooks. The render step downloads public source files or reads explicitly preserved local copies, but does not execute any code:
 
 ```powershell
 python -m pip install -r requirements-notebooks.txt

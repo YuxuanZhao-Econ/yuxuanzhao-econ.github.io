@@ -25,9 +25,12 @@ class NotebookPage:
     output_path: str
     title: str
     description: str
+    local_source: bool = False
 
     @property
     def source_url(self) -> str:
+        if self.local_source:
+            return f"/{self.source_path}"
         return f"https://github.com/{OWNER}/{self.repository}/blob/main/{self.source_path}"
 
     @property
@@ -72,6 +75,22 @@ NOTEBOOKS = (
         description="A compact introduction to solving an RBC model with sequence-space Jacobians in Julia.",
     ),
     NotebookPage(
+        repository="sequence_space_jacobian",
+        source_path="notebooks/sequence-space-jacobian/hank/HANK.ipynb",
+        output_path="notebooks/sequence-space-jacobian/hank/index.html",
+        title="Solving a HANK Model with the Sequence-Space Jacobian Method",
+        description="A one-asset HANK model solved with sequence-space Jacobians, transition blocks, and the fake news algorithm.",
+        local_source=True,
+    ),
+    NotebookPage(
+        repository="sequence_space_jacobian",
+        source_path="notebooks/sequence-space-jacobian/kmv-hank/KMV_HANK.ipynb",
+        output_path="notebooks/sequence-space-jacobian/kmv-hank/index.html",
+        title="Solving a Discrete-Time Two-Asset KMV-Style HANK Model with Sequence-Space Jacobians",
+        description="A two-asset KMV-style HANK model with liquid and illiquid assets, capital, equity, and sequence-space Jacobians.",
+        local_source=True,
+    ),
+    NotebookPage(
         repository="HANK",
         source_path="notebooks/HANK.ipynb",
         output_path="notebooks/hank/index.html",
@@ -96,12 +115,15 @@ NOTEBOOKS = (
 
 
 def download_notebook(page: NotebookPage):
-    request = urllib.request.Request(
-        page.raw_url,
-        headers={"User-Agent": "Yuxuan-Zhao-notebook-publisher"},
-    )
-    with urllib.request.urlopen(request, timeout=90) as response:
-        raw = response.read().decode("utf-8")
+    if page.local_source:
+        raw = (ROOT / page.source_path).read_text(encoding="utf-8")
+    else:
+        request = urllib.request.Request(
+            page.raw_url,
+            headers={"User-Agent": "Yuxuan-Zhao-notebook-publisher"},
+        )
+        with urllib.request.urlopen(request, timeout=90) as response:
+            raw = response.read().decode("utf-8")
 
     # Older notebooks may not contain cell IDs. Assign stable IDs before
     # nbformat validation so unchanged notebooks render identically every run.
@@ -207,7 +229,14 @@ def render_page(page: NotebookPage, body: str, inline_css: str, kernel: str) -> 
 
 
 def main() -> int:
-    for page in NOTEBOOKS:
+    requested = set(sys.argv[1:])
+    selected = [page for page in NOTEBOOKS if not requested or page.output_path in requested]
+    missing = requested.difference(page.output_path for page in selected)
+    if missing:
+        print(f"Unknown notebook output path(s): {', '.join(sorted(missing))}", file=sys.stderr)
+        return 2
+
+    for page in selected:
         print(f"Rendering {page.repository}/{page.source_path}")
         notebook = download_notebook(page)
         remove_duplicate_title(notebook)

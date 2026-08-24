@@ -25,12 +25,10 @@ class NotebookPage:
     output_path: str
     title: str
     description: str
-    local_source: bool = False
+    local_source_path: str | None = None
 
     @property
     def source_url(self) -> str:
-        if self.local_source:
-            return f"/{self.source_path}"
         return f"https://github.com/{OWNER}/{self.repository}/blob/main/{self.source_path}"
 
     @property
@@ -55,17 +53,17 @@ NOTEBOOKS = (
     ),
     NotebookPage(
         repository="DeepLearningMacro",
-        source_path="notebooks/deep-learning-macro/krusell-smith/KS1998.ipynb",
+        source_path="notebooks/KS1998.ipynb",
         output_path="notebooks/deep-learning-macro/krusell-smith/index.html",
         title="Deep Learning for the Krusell–Smith Model",
         description="A deep-learning Euler-equation method for the Krusell–Smith heterogeneous-agent model.",
-        local_source=True,
+        local_source_path="notebooks/deep-learning-macro/krusell-smith/KS1998.ipynb",
     ),
     NotebookPage(
         repository="sequence_space_jacobian",
         source_path="notebooks/KS1998.ipynb",
         output_path="notebooks/sequence-space-jacobian/krusell-smith/index.html",
-        title="Krusell–Smith with Sequence-Space Jacobians",
+        title="Krusell–Smith Model with Sequence-Space Jacobians",
         description="A heterogeneous-agent transition exercise using sequence-space Jacobians and the fake news algorithm.",
     ),
     NotebookPage(
@@ -77,19 +75,19 @@ NOTEBOOKS = (
     ),
     NotebookPage(
         repository="sequence_space_jacobian",
-        source_path="notebooks/sequence-space-jacobian/hank/HANK.ipynb",
+        source_path="notebooks/HANK.ipynb",
         output_path="notebooks/sequence-space-jacobian/hank/index.html",
-        title="Solving a HANK Model with the Sequence-Space Jacobian Method",
+        title="HANK Model with Sequence-Space Jacobians",
         description="A one-asset HANK model solved with sequence-space Jacobians, transition blocks, and the fake news algorithm.",
-        local_source=True,
+        local_source_path="notebooks/sequence-space-jacobian/hank/HANK.ipynb",
     ),
     NotebookPage(
         repository="sequence_space_jacobian",
-        source_path="notebooks/sequence-space-jacobian/kmv-hank/KMV_HANK.ipynb",
+        source_path="notebooks/KMV_HANK.ipynb",
         output_path="notebooks/sequence-space-jacobian/kmv-hank/index.html",
-        title="Solving a Discrete-Time Two-Asset KMV-Style HANK Model with Sequence-Space Jacobians",
+        title="Two-Asset HANK Model with Sequence-Space Jacobians",
         description="A two-asset KMV-style HANK model with liquid and illiquid assets, capital, equity, and sequence-space Jacobians.",
-        local_source=True,
+        local_source_path="notebooks/sequence-space-jacobian/kmv-hank/KMV_HANK.ipynb",
     ),
     NotebookPage(
         repository="HANK",
@@ -116,8 +114,8 @@ NOTEBOOKS = (
 
 
 def download_notebook(page: NotebookPage):
-    if page.local_source:
-        raw = (ROOT / page.source_path).read_text(encoding="utf-8")
+    if page.local_source_path:
+        raw = (ROOT / page.local_source_path).read_text(encoding="utf-8")
     else:
         request = urllib.request.Request(
             page.raw_url,

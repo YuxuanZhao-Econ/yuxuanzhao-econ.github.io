@@ -187,7 +187,7 @@ def render_page(page: NotebookPage, body: str, inline_css: str, kernel: str) -> 
     <style>{inline_css}</style>
     <link rel="stylesheet" href="/notebooks/notebook.css" />
     <script>
-      window.MathJax = {{ tex: {{ inlineMath: [['$', '$'], ['\\\\(', '\\\\)']] }}, options: {{ skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }} }};
+      window.MathJax = {{ tex: {{ inlineMath: [['$', '$'], ['\\\\(', '\\\\)']], macros: {{ Chi: '\\\\mathrm{{X}}' }} }}, options: {{ skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }} }};
     </script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" defer></script>
     <script src="/notebooks/notebook.js" defer></script>

@@ -1,0 +1,2 @@
+# Keep downloadable notebook sources byte-for-byte identical to local files.
+*.ipynb -text

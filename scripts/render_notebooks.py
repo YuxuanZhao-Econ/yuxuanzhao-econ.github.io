@@ -55,10 +55,11 @@ NOTEBOOKS = (
     ),
     NotebookPage(
         repository="DeepLearningMacro",
-        source_path="notebooks/KS1998.ipynb",
+        source_path="notebooks/deep-learning-macro/krusell-smith/KS1998.ipynb",
         output_path="notebooks/deep-learning-macro/krusell-smith/index.html",
         title="Deep Learning for the Krusell–Smith Model",
         description="A deep-learning Euler-equation method for the Krusell–Smith heterogeneous-agent model.",
+        local_source=True,
     ),
     NotebookPage(
         repository="sequence_space_jacobian",
